@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Principal",
+            "request": "launch",
+            "mainClass": "gui.Principal",
+            "projectName": "Laura"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Principal",
+            "request": "launch",
+            "mainClass": "ventanas.Principal",
+            "projectName": "Laura",
+            "console": "integratedTerminal"
+        }
+    ]
+}
