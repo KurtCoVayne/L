@@ -1,4 +1,4 @@
-package punnett;
+package gui;
 
 import java.awt.Color;
 import java.awt.Component;
