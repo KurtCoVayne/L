@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
@@ -49,6 +50,9 @@ public class Level3Sublevel1 extends JFrame implements MouseListener {
     JLabel guisanteMovible;
     boolean isMousePressed = false;
     boolean flag = false;
+    boolean estado;
+    int contadorVerdes = 4;
+    int contadorNaranjas = 4;
     Timer timer;
     /**
      *
@@ -161,6 +165,14 @@ public class Level3Sublevel1 extends JFrame implements MouseListener {
         setVisible(true);
     }
 
+    private boolean estaEntreCoordenadas(int x, int y, JComponent componente) {
+        if (x >= componente.getX() && x <= componente.getX() + componente.getWidth() && y >= componente.getY()
+                && y <= componente.getY() + componente.getHeight()) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
     }
@@ -175,20 +187,14 @@ public class Level3Sublevel1 extends JFrame implements MouseListener {
                 int y = (int) posicionMouse.getY();
 
                 if (!flag) {
-                    if (x >= guisanteNaranjaBoton.getX()
-                            && x <= guisanteNaranjaBoton.getX() + guisanteNaranjaBoton.getWidth()
-                            && y >= guisanteNaranjaBoton.getY()
-                            && y <= guisanteNaranjaBoton.getY() + guisanteNaranjaBoton.getHeight()) {
+                    if (estaEntreCoordenadas(x, y, guisanteNaranjaBoton)) {
                         guisanteMovible.setIcon(guisanteNaranja);
                         guisanteNaranjaBoton.setIcon(guisanteGris);
-                        // System.out.println("Guisante naranja");
-                    } else if (x >= guisanteVerdeBoton.getX()
-                            && x <= guisanteVerdeBoton.getX() + guisanteVerdeBoton.getWidth()
-                            && y >= guisanteVerdeBoton.getY()
-                            && y <= guisanteVerdeBoton.getY() + guisanteVerdeBoton.getHeight()) {
+                        estado = false;
+                    } else if (estaEntreCoordenadas(x, y, guisanteVerdeBoton)) {
                         guisanteMovible.setIcon(guisanteVerde);
                         guisanteVerdeBoton.setIcon(guisanteGris);
-                        // System.out.println("Guisante Verde");
+                        estado = true;
                     } else {
                         guisanteMovible.setVisible(false);
                         System.out.println("No fue apretado ningun guisante");
@@ -207,12 +213,46 @@ public class Level3Sublevel1 extends JFrame implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         flag = false;
-        guisanteNaranjaBoton.setIcon(guisanteNaranja);
-        guisanteVerdeBoton.setIcon(guisanteVerde);
-
+        Point posicionMouse = MouseInfo.getPointerInfo().getLocation();
+        SwingUtilities.convertPointFromScreen(posicionMouse, guisanteMovible.getParent());
+        int x = (int) posicionMouse.getX();
+        int y = (int) posicionMouse.getY();
         isMousePressed = false;
         guisanteMovible.setVisible(false);
         timer.stop();
+        if (!estado) {
+            contadorNaranjas--;
+            guisanteNaranjaBoton.setIcon(guisanteGris);
+        } else {
+            contadorVerdes--;
+            guisanteVerdeBoton.setIcon(guisanteGris);
+        }
+        if (estaEntreCoordenadas(x, y, cuadro4_1)) {
+            cuadro4_1.setIcon(guisanteMovible.getIcon());
+        } else if (estaEntreCoordenadas(x, y, cuadro4_2)) {
+            cuadro4_2.setIcon(guisanteMovible.getIcon());
+        } else if (estaEntreCoordenadas(x, y, cuadro5_1)) {
+            cuadro5_1.setIcon(guisanteMovible.getIcon());
+        } else if (estaEntreCoordenadas(x, y, cuadro5_2)) {
+            cuadro5_2.setIcon(guisanteMovible.getIcon());
+        } else if (estaEntreCoordenadas(x, y, cuadro7_1)) {
+            cuadro7_1.setIcon(guisanteMovible.getIcon());
+        } else if (estaEntreCoordenadas(x, y, cuadro7_2)) {
+            cuadro7_2.setIcon(guisanteMovible.getIcon());
+        } else if (estaEntreCoordenadas(x, y, cuadro8_1)) {
+            cuadro8_1.setIcon(guisanteMovible.getIcon());
+        } else if (estaEntreCoordenadas(x, y, cuadro8_2)) {
+            cuadro8_2.setIcon(guisanteMovible.getIcon());
+        } else {
+            if (!estado) {
+                contadorNaranjas++;
+                guisanteNaranjaBoton.setIcon(guisanteNaranja);
+            } else {
+                contadorVerdes++;
+                guisanteVerdeBoton.setIcon(guisanteVerde);
+            }
+        }
+
         System.out.println("check");
 
     }
